@@ -1,0 +1,31 @@
+x-common-config:
+  &common-config
+  network_mode: host
+  ipc: host
+  env_file: .env
+
+services:
+  livox:
+    # image: husarion/livox:humble
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    <<: *common-config
+    volumes:
+      - ./MID360_config.json:/ros2_ws/install/livox_ros_driver2/share/livox_ros_driver2/config/MID360_config.json
+
+    command: >
+      ros2 launch /husarion_utils/livox.launch.py
+
+  rviz:
+    image: husarion/rviz2:humble
+    <<: *common-config
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./default.rviz:/root/.rviz2/default.rviz
+      - ./rviz.launch.py:/ros2_ws/rviz.launch.py
+    environment:
+      - DISPLAY=${DISPLAY:?err}
+      - LIBGL_ALWAYS_SOFTWARE=1
+    command: >
+      ros2 launch rviz.launch.py
