@@ -2,7 +2,7 @@
   Docker Images for Livox LIDARs
 </h1>
 
-The repository includes a GitHub Actions workflow that automatically deploys built Docker images to the [husarion/livox-docker](https://hub.docker.com/r/husarion/livox) Docker Hub repositories. This process is based on the [Livox-SDK/livox_ros_driver2](https://github.com/Livox-SDK/livox_ros_driver2)repository.
+The repository includes a GitHub Actions workflow that automatically deploys built Docker images to the [husarion/livox-docker](https://hub.docker.com/r/husarion/livox) Docker Hub repositories. This process is based on the fork of [tu-darmstadt-ros-pkg/livox_ros_driver2](https://github.com/tu-darmstadt-ros-pkg/livox_ros_driver2) repository.
 
 [![ROS Docker Image](https://github.com/husarion/livox-docker/actions/workflows/ros-docker-image.yaml/badge.svg)](https://github.com/husarion/livox-docker/actions/workflows//ros-docker-image.yaml)
 

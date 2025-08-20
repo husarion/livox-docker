@@ -12,6 +12,7 @@ from launch.substitutions import (
     PathJoinSubstitution,
 )
 from launch_ros.substitutions import FindPackageShare
+from nav2_common.launch import ReplaceString
 
 
 def create_health_status_file():
@@ -69,6 +70,13 @@ def launch_setup(context, *args, **kwargs):
     cmdline_bd_code = "livox0000000001"
     user_config_path = PathJoinSubstitution(
         [FindPackageShare("livox_ros_driver2"), "config", "MID360_config.json"]
+    )
+
+    user_config_path = ReplaceString(
+        source_file=user_config_path,
+        replacements={
+            "<frame_id>": frame_id,
+        },
     )
 
     livox_ros2_params = [
