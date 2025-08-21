@@ -13,7 +13,8 @@ services:
     <<: *common-config
     volumes:
       - ./MID360_config.json:/ros2_ws/install/livox_ros_driver2/share/livox_ros_driver2/config/MID360_config.json
-
+    environment:
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
     command: >
       ros2 launch /husarion_utils/livox.launch.py
 
@@ -25,7 +26,7 @@ services:
       - ./default.rviz:/root/.rviz2/default.rviz
       - ./rviz.launch.py:/ros2_ws/rviz.launch.py
     environment:
-      - DISPLAY=${DISPLAY:?err}
+      # - DISPLAY=${DISPLAY:?err}
       - LIBGL_ALWAYS_SOFTWARE=1
     command: >
       ros2 launch rviz.launch.py

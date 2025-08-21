@@ -32,23 +32,17 @@ RUN source /opt/ros/$ROS_DISTRO/setup.bash && \
     echo $(cat /ros2_ws/src/livox_ros_driver2/package.xml | grep '<version>' | sed -r 's/.*<version>([0-9]+.[0-9]+.[0-9]+)<\/version>/\1/g') > /version.txt && \
     rm -rf build log
 
-# # =========================== final stage ===============================
-FROM husarnet/ros:${PREFIX}${ROS_DISTRO}-ros-core AS final-stage
-
-ARG PREFIX
-
-COPY --from=pkg-builder /ros2_ws /ros2_ws
-COPY --from=pkg-builder /version.txt  /version.txt
-
 RUN apt update -y && \
     apt-get install -y ros-$ROS_DISTRO-nav2-common && \
     apt-get clean && \
     rm -rf src && \
     rm -rf /var/lib/apt/lists/*
 
-
 COPY ./husarion_utils /husarion_utils
-
 
 HEALTHCHECK --interval=2s --timeout=1s --start-period=20s --retries=1 \
     CMD ["/husarion_utils/healthcheck.sh"]
+
+
+# Ensure LIDAR stops spinning on container shutdown
+STOPSIGNAL SIGINT
