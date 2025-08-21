@@ -6,7 +6,7 @@ x-common-config:
 
 services:
   livox:
-    # image: husarion/livox:humble
+    # image: husarion/livox-lidar:jazzy
     build:
       context: ..
       dockerfile: Dockerfile
@@ -26,7 +26,8 @@ services:
       - ./default.rviz:/root/.rviz2/default.rviz
       - ./rviz.launch.py:/ros2_ws/rviz.launch.py
     environment:
-      # - DISPLAY=${DISPLAY:?err}
+      - DISPLAY=${DISPLAY:?err}
       - LIBGL_ALWAYS_SOFTWARE=1
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
     command: >
       ros2 launch rviz.launch.py
